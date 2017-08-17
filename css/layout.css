@@ -47,6 +47,7 @@ header:before {
    vertical-align: middle;
    height: 100%;
 }
+<!-- 
 header .banner {
    display: inline-block;
    vertical-align: middle;
@@ -54,7 +55,7 @@ header .banner {
    width: 85%;
    padding-bottom: 30px;s
    text-align: center;
-}
+} -->
 
 header .banner-text { width: 100%; }
 header .banner-text h1 {
