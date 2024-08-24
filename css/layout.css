@@ -30,8 +30,8 @@ body { background: #0f0f0f; }
 
 header {
    position: relative;
-   height: 800px;
-   min-height: 500px;
+   height: 1600px;
+   min-height: 1000px;
    width: 100%;
    background: url('.../images/deadmellowglitch85.jpg') no-repeat center !important;
    background-size: cover !important;
