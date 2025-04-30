@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           const dateEl = document.createElement('p');
           dateEl.className = 'event-date';
-          dateEl.textContent = item.date.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+          dateEl.textContent = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
           container.appendChild(dateEl);
 
           const link = document.createElement('a');
