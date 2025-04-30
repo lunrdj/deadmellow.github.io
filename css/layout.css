@@ -982,9 +982,7 @@ header#home {
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 1200px;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: rgba(255, 255, 255, 0.3);
+  background: radial-gradient(circle at 20% 20%, rgba(0, 200, 255, 0.4), rgba(128, 0, 255, 0.4) 50%, rgba(0, 255, 128, 0.4) 80%, rgba(255, 255, 255, 0.4) 100%);
   backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 12px;
@@ -992,8 +990,25 @@ header#home {
   z-index: 10;
 }
 .overlay-split-window .six.columns {
-  flex: 1 1 45%;
+  flex: 0 0 45%;
   min-width: 300px;
   padding: 1rem;
+}
+
+/* Flex layout for overlay rows */
+.overlay-split-window .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Improve legibility of text inside overlay */
+.overlay-split-window h2,
+.overlay-split-window p,
+.overlay-split-window li {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 

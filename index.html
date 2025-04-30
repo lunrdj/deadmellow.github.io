@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
    <!--- Basic Page Needs
    ================================================== -->
@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="css/layout.css">
    <link rel="stylesheet" href="css/media-queries.css">
    <link rel="stylesheet" href="css/magnific-popup.css">
+   <link rel="stylesheet" href="css/frostedcard.css">
+  
 
    <!-- Script
    ================================================== -->
@@ -68,13 +70,13 @@
       </p>
 
       <div class="overlay-split-window">
-     <div class="row">
-       <div class="six columns upcoming-calendar">
-         <h2>Upcoming Shows</h2>
-         <p><a href="webcal://p28-caldav.icloud.com/published/2/MTk5MTY1Mjg0MTk5MTY1Mn36jlThhyne4huQCwOymWWDNlC-pFdjiVMB-Vz4dy-Cyq_QN8C-WjZU7FRM_0EwrlZMnPOFL3alE2uV1r8vDvY" class="button">Subscribe to Calendar</a></p>
-         <div id="calendar-list"><p>Loading upcoming shows...</p></div>
-       </div>
-       <div class="six columns upcoming-soundcloud">
+      <div class="row">
+        <div class="six columns upcoming-calendar">
+          <h2>Upcoming Shows</h2>
+          <p><a href="calendar.ics" class="button">Subscribe to Calendar</a></p>
+          <div id="calendar-list"></div>
+        </div>
+        <div class="six columns upcoming-soundcloud">
          <h2>Latest Mixes</h2>
          <!-- Existing SoundCloud widget, adjusted height -->
          <iframe
@@ -291,7 +293,7 @@
 
    </footer> <!-- Footer End-->
 
-   <!-- Java Script
+
    ================================================== -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" defer></script>
    <script defer>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js" defer><\/script>')</script>
@@ -303,35 +305,89 @@
    <script src="js/init.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function() {
-  var url = 'webcal://p28-caldav.icloud.com/published/2/MTk5MTY1Mjg0MTk5MTY1Mn36jlThhyne4huQCwOymWWDNlC-pFdjiVMB-Vz4dy-Cyq_QN8C-WjZU7FRM_0EwrlZMnPOFL3alE2uV1r8vDvY';
-  var icalUrl = url.replace('webcal://','https://');
-  fetch(icalUrl)
-    .then(function(res){ return res.text(); })
-    .then(function(data){
-      var jcalData = ICAL.parse(data);
-      var comp = new ICAL.Component(jcalData);
-      var events = comp.getAllSubcomponents('vevent');
-      var now = new Date();
-      var upcoming = events.map(function(e){ return new ICAL.Event(e); })
-        .filter(function(ev){ return ev.startDate.toJSDate() >= now; })
-        .sort(function(a,b){ return a.startDate.toJSDate() - b.startDate.toJSDate(); })
-        .slice(0,5);
-      var listEl = document.getElementById('calendar-list');
+  fetch('calendar.ics')
+    .then(response => response.text())
+    .then(icsText => {
+      const jcal = ICAL.parse(icsText);
+      const comp = new ICAL.Component(jcal);
+      const vevents = comp.getAllSubcomponents('vevent');
+      // Build next occurrences, including recurring events
+      const today = new Date();
+      const upcomingOccurrences = [];
+      vevents.forEach(component => {
+        const ev = new ICAL.Event(component);
+        if (ev.isRecurring()) {
+          const iterator = ev.iterator();
+          let next;
+          // get up to 5 total occurrences (shared across all recurring events)
+          while ((next = iterator.next()) && upcomingOccurrences.length < 5) {
+            const date = next.toJSDate();
+            if (date >= today) {
+              upcomingOccurrences.push({ date, summary: ev.summary });
+            }
+          }
+        } else {
+          const date = ev.startDate.toJSDate();
+          if (date >= today) {
+            upcomingOccurrences.push({ date, summary: ev.summary });
+          }
+        }
+      });
+      // sort all occurrences by date and take the first five
+      upcomingOccurrences.sort((a, b) => a.date - b.date);
+      const upcoming = upcomingOccurrences.slice(0, 5);
+      // Render list items
+      const listEl = document.getElementById('calendar-list');
       if (upcoming.length) {
-        var ul = document.createElement('ul');
-        upcoming.forEach(function(ev){
-          var li = document.createElement('li');
-          var date = ev.startDate.toJSDate();
-          li.textContent = date.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'}) + ' - ' + ev.summary;
-          ul.appendChild(li);
-        });
         listEl.innerHTML = '';
-        listEl.appendChild(ul);
+        upcoming.forEach(item => {
+          const container = document.createElement('div');
+          container.className = 'event-item';
+
+          const titleEl = document.createElement('h3');
+          titleEl.textContent = item.summary;
+          titleEl.className = 'event-title';
+          container.appendChild(titleEl);
+
+          const dateEl = document.createElement('p');
+          dateEl.className = 'event-date';
+          dateEl.textContent = item.date.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+          container.appendChild(dateEl);
+
+          const link = document.createElement('a');
+          link.href = '#';
+          link.className = 'add-calendar-link';
+          link.textContent = 'Add to calendar';
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const icsLines = [
+              'BEGIN:VCALENDAR',
+              'VERSION:2.0',
+              'BEGIN:VEVENT',
+              'UID:' + item.summary + item.date.getTime(),
+              'DTSTAMP:' + new ICAL.Time.now().toString(),
+              'SUMMARY:' + item.summary,
+              'DTSTART:' + ICAL.Time.fromJSDate(item.date, true).toString(),
+              'END:VEVENT',
+              'END:VCALENDAR'
+            ];
+            const blob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = item.summary.replace(/\s+/g,'_') + '.ics';
+            a.click();
+            URL.revokeObjectURL(url);
+          });
+          container.appendChild(link);
+
+          listEl.appendChild(container);
+        });
       } else {
-        listEl.innerHTML = '<p>Stay tuned for more shows added soon.</p>';
+        listEl.innerHTML = '<p>No upcoming shows.</p>';
       }
     })
-    .catch(function(err){
+    .catch(err => {
       console.error(err);
       document.getElementById('calendar-list').innerHTML = '<p>Could not load events.</p>';
     });
