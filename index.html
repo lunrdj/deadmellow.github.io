@@ -305,7 +305,7 @@
    <script src="js/init.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('calendar.ics')
+  fetch('./calendar.ics')
     .then(response => response.text())
     .then(icsText => {
       const jcal = ICAL.parse(icsText);

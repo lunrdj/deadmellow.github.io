@@ -2,8 +2,8 @@ name: Refresh iCloud Calendar
 
 on:
   schedule:
-    - cron: '0 */12 * * *'    # every 4 hours; adjust as you like
-  workflow_dispatch:        # also allows manual trigger
+    - cron: '0 7 * * *'    # every day at midnight MST (07:00 UTC)
+  workflow_dispatch:        # manual trigger
 
 jobs:
   update-calendar:
@@ -22,7 +22,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add calendar.ics
-          # Only commit if there are changes
           if ! git diff --cached --exit-code; then
             git commit -m "Automated: update calendar.ics"
             git push
