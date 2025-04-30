@@ -1,18 +1,6 @@
 <!DOCTYPE html>
-<!--[if lt IE 8 ]><html class="no-js ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="no-js ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 8)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
 <head>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-92626046-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
    <!--- Basic Page Needs
    ================================================== -->
    <meta charset="utf-8">
@@ -21,6 +9,12 @@
    <!-- Mobile Specific Metas
    ================================================== -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DeadMellow: Denver-based DJ Tim Toole mixing pop, house, and trap to connect people through music.">
+  <meta property="og:title" content="DEADMELLOW | Denver DJ Tim Toole">
+  <meta property="og:description" content="DeadMellow: Denver-based DJ Tim Toole mixing pop, house, and trap to connect people through music.">
+  <meta property="og:image" content="images/IMG_1289.PNG">
+  <meta property="og:url" content="https://deadmellow.github.io">
+  <meta name="twitter:card" content="summary_large_image">
 
 	<!-- CSS
     ================================================== -->
@@ -31,13 +25,11 @@
 
    <!-- Script
    ================================================== -->
-	<script src="js/modernizr.js"></script>
 
    <!-- Favicons
 	================================================== -->
 	<link rel="shortcut icon" href="favicon (1).png" >
-
-</head>
+<script src="https://cdn.jsdelivr.net/npm/ical.js@1.4.0/build/ical.min.js"></script></head>
 
 <body>
 
@@ -45,7 +37,7 @@
    ================================================== -->
    <header id="home">
 
-      <nav id="nav-wrap">
+      <nav id="nav-wrap" aria-label="Main navigation">
 
          <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
 	      <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
@@ -77,6 +69,29 @@
 
    </header> <!-- Header End -->
 
+   <!-- Upcoming Shows & SoundCloud Split Section -->
+   <section id="upcoming" class="split-screen">
+     <div class="row">
+       <div class="six columns upcoming-calendar">
+         <h2>Upcoming Shows</h2>
+         <p><a href="webcal://p28-caldav.icloud.com/published/2/MTk5MTY1Mjg0MTk5MTY1Mn36jlThhyne4huQCwOymWWDNlC-pFdjiVMB-Vz4dy-Cyq_QN8C-WjZU7FRM_0EwrlZMnPOFL3alE2uV1r8vDvY" class="button">Subscribe to Calendar</a></p>
+         <div id="calendar-list"><p>Loading upcoming shows...</p></div>
+       </div>
+       <div class="six columns upcoming-soundcloud">
+         <h2>Latest Mixes</h2>
+         <!-- Existing SoundCloud widget, adjusted height -->
+         <iframe
+           width="100%"
+           height="600"
+           scrolling="no"
+           frameborder="no"
+           loading="lazy"
+           src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"
+         ></iframe>
+       </div>
+     </div>
+   </section>
+
 
    <!-- About Section
    ================================================== -->
@@ -86,7 +101,7 @@
 
          <div class="three columns">
 
-            <img class="profile-pic"  src="images/IMG_1289.PNG" alt="" />
+            <img class="profile-pic"  src="images/IMG_1289.PNG" alt="Tim Toole DJ profile shot" loading="lazy" />
 
          </div>
 
@@ -137,8 +152,7 @@
 
                <div class="twelve columns">
 
-                  <h3><iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
-                  </p>
+                  <h3><iframe width="100%" height="450" scrolling="no" frameborder="no" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
 
                </div>
 
@@ -243,8 +257,6 @@
 				   </div>
 
  
-                     </li>
-                  </ul>
 
 		         </div>
 
@@ -283,16 +295,50 @@
 
    <!-- Java Script
    ================================================== -->
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-   <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
-   <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
-
-   <script src="js/jquery.flexslider.js"></script>
-   <script src="js/waypoints.js"></script>
-   <script src="js/jquery.fittext.js"></script>
-   <script src="js/magnific-popup.js"></script>
-   <script src="js/init.js"></script>
-
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" defer></script>
+   <script defer>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js" defer><\/script>')</script>
+   <script src="js/jquery-migrate-1.2.1.min.js" defer></script>
+   <script src="js/jquery.flexslider.js" defer></script>
+   <script src="js/waypoints.js" defer></script>
+   <script src="js/jquery.fittext.js" defer></script>
+   <script src="js/magnific-popup.js" defer></script>
+   <script src="js/init.js" defer></script>
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  var url = 'webcal://p28-caldav.icloud.com/published/2/MTk5MTY1Mjg0MTk5MTY1Mn36jlThhyne4huQCwOymWWDNlC-pFdjiVMB-Vz4dy-Cyq_QN8C-WjZU7FRM_0EwrlZMnPOFL3alE2uV1r8vDvY';
+  var icalUrl = url.replace('webcal://','https://');
+  fetch(icalUrl)
+    .then(function(res){ return res.text(); })
+    .then(function(data){
+      var jcalData = ICAL.parse(data);
+      var comp = new ICAL.Component(jcalData);
+      var events = comp.getAllSubcomponents('vevent');
+      var now = new Date();
+      var upcoming = events.map(function(e){ return new ICAL.Event(e); })
+        .filter(function(ev){ return ev.startDate.toJSDate() >= now; })
+        .sort(function(a,b){ return a.startDate.toJSDate() - b.startDate.toJSDate(); })
+        .slice(0,5);
+      var listEl = document.getElementById('calendar-list');
+      if (upcoming.length) {
+        var ul = document.createElement('ul');
+        upcoming.forEach(function(ev){
+          var li = document.createElement('li');
+          var date = ev.startDate.toJSDate();
+          li.textContent = date.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'}) + ' - ' + ev.summary;
+          ul.appendChild(li);
+        });
+        listEl.innerHTML = '';
+        listEl.appendChild(ul);
+      } else {
+        listEl.innerHTML = '<p>Stay tuned for more shows added soon.</p>';
+      }
+    })
+    .catch(function(err){
+      console.error(err);
+      document.getElementById('calendar-list').innerHTML = '<p>Could not load events.</p>';
+    });
+});
+</script>
 </body>
 
 </html>
