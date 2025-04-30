@@ -968,5 +968,32 @@ footer .social-links li:first-child { margin-left: 0; }
    line-height: 60px;
  	border-radius: 100%;
 }
+
 #go-top a:hover { background-color: #0F9095; }
+
+/* Overlay split-screen window on header */
+header#home {
+  position: relative;
+}
+.overlay-split-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.overlay-split-window .six.columns {
+  flex: 1 1 45%;
+  min-width: 300px;
+  padding: 1rem;
+}
 
