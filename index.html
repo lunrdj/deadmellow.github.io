@@ -305,7 +305,9 @@
    <script src="js/init.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('./calendar.ics')
+  const listEl = document.getElementById('calendar-list');
+  listEl.innerHTML = '<p>Loading upcoming shows...</p>';
+  fetch('calendar.ics')
     .then(response => response.text())
     .then(icsText => {
       const jcal = ICAL.parse(icsText);
