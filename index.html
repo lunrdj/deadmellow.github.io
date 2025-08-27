@@ -6,7 +6,7 @@
   <title>DEADMELLOW | DENVER</title>
 
   <!-- Mobile Specific Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="DeadMellow: Denver-based DJ Tim Toole mixing pop, house, and trap to connect people through music.">
   <meta property="og:title" content="DEADMELLOW | Denver DJ Tim Toole">
   <meta property="og:description" content="DeadMellow: Denver-based DJ Tim Toole mixing pop, house, and trap to connect people through music.">
@@ -39,6 +39,14 @@
 
   <!-- ical.js (deferred to ensure it is available when calendar parser runs) -->
   <script src="https://cdn.jsdelivr.net/npm/ical.js@1.4.0/build/ical.min.js" defer></script>
+
+  <style>
+    /* small, safe addition — move to CSS file */
+    .responsive-embed{ position:relative; width:100%; padding-bottom:56.25%; /* 16:9 */ height:0; overflow:hidden; }
+    .responsive-embed iframe{ position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    /* increase touch target for buttons/links on small screens */
+    .submit{ padding:12px 18px; font-size:1rem; }
+  </style>
 </head>
 
 <body>
@@ -86,15 +94,11 @@
 
         <div class="six columns upcoming-soundcloud">
           <h2>Latest Mixes</h2>
-          <iframe
-            width="100%"
-            height="600"
-            scrolling="no"
-            frameborder="no"
-            loading="lazy"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"
-            title="DeadMellow SoundCloud"
-          ></iframe>
+          <div class="responsive-embed">
+            <iframe loading="lazy" title="DeadMellow SoundCloud"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -150,19 +154,17 @@
   <!-- Contact Section -->
   <section id="contact">
     <div class="row section-head">
-      <div class="two columns header-col">
-        <h1><span>Get In Touch.</span></h1>
-      </div>
-
-      <div class="ten columns">
-        <p class="lead">Want to book deadmellow? Get in touch.</p>
-      </div>
     </div>
 
     <div class="row">
       <div class="eight columns">
-        <form action="" method="post" id="contactForm" name="contactForm">
+        <!-- Replace YOUR_FORM_ID with your Formspree form ID -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm" name="contactForm" accept-charset="UTF-8" novalidate>
           <fieldset>
+            <!-- honeypot to reduce spam -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="New booking request from website">
+
             <div>
               <label for="contactName">Name <span class="required">*</span></label>
               <input type="text" value="" size="35" id="contactName" name="contactName" required>
@@ -185,30 +187,19 @@
 
             <div>
               <button type="submit" class="submit">Submit</button>
-              <span id="image-loader">
+              <span id="image-loader" aria-hidden="true" style="display:none;">
                 <img alt="" src="images/loader.gif">
               </span>
             </div>
           </fieldset>
         </form>
 
-        <div id="message-warning"> Error boy</div>
-        <div id="message-success">
+        <div id="message-warning" style="display:none;"> Error sending message</div>
+        <div id="message-success" style="display:none;">
           <i class="fa fa-check"></i>Your message was sent, thank you!<br>
         </div>
       </div>
-
-      <aside class="four columns footer-widgets">
-        <div class="widget widget_contact">
-          <h4>For Bookings</h4>
-          <p class="address">
-            Tim Toole<br>
-            (312) 497-6223<br>
-            <a href="mailto:tim@deadmellow.com" target="_top">tim@deadmellow.com</a> <br>
-          </p>
-        </div>
-      </aside>
-    </div>
+     </div>
   </section>
 
   <!-- footer -->
@@ -232,7 +223,7 @@
 
   <!-- Scripts -->
   <!-- NOTE: add SRI integrity when you pin a specific CDN file hash; avoid using an incorrect placeholder -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
           crossorigin="anonymous"
           onerror="this.onerror=null;this.src='js/jquery-1.10.2.min.js'"></script>
   <script src="js/jquery-migrate-1.2.1.min.js" defer></script>
@@ -244,6 +235,24 @@
   
   <!-- calendar script moved to external file for CSP and caching -->
   <script src="js/calendar.js" defer></script>
+  <!-- contact form client handler -->
+  <script src="js/contact.js" defer></script>
+  
+  <div id="sc-placeholder" class="responsive-embed" aria-hidden="false">
+    <button id="sc-load" class="button">Load mixes</button>
+  </div>
 
+  <script>
+  // filepath: c:\Users\ttoole\Documents\GitHub\deadmellow.github.io\js\soundcloud-loader.js
+  document.addEventListener('DOMContentLoaded', function () {
+    var btn = document.getElementById('sc-load');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var container = document.getElementById('sc-placeholder');
+      container.innerHTML = '<iframe loading="lazy" title="DeadMellow SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/40112421&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+    });
+  });
+  </script>
+  
 </body>
 </html>
