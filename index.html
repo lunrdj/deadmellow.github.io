@@ -47,10 +47,21 @@
     /* increase touch target for buttons/links on small screens */
     .submit{ padding:12px 18px; font-size:1rem; }
   </style>
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="/fonts/MadeMellow-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/MadeMellow-Regular.woff" as="font" type="font/woff" crossorigin>
+  <!-- If you have a bold/italic face add additional preload lines similarly -->
+
 </head>
 
 <body>
 
+  <!-- site title topbar -->
+  <div class="site-topbar" role="banner" aria-label="Site title">
+    <h1 class="site-title">deadmellow</h1>
+  </div>
+  
   <!-- Header -->
   <header id="home">
 
